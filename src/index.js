@@ -312,7 +312,7 @@ function findChangedFiles(branch, useParent) {
 
     const commit = result.stdout.trim()
     debugGit('merge commit with branch "%s" is %s', branch, commit)
-    result = shell.exec(`git diff --name-only --diff-filter=AMR ${commit}..`, {
+    result = shell.exec(`git diff --relative --name-only --diff-filter=AMR ${commit}..`, {
       silent: true,
     })
     if (result.code !== 0) {
@@ -331,7 +331,7 @@ function findChangedFiles(branch, useParent) {
     )
     return filenames
   } else {
-    const command = `git diff --name-only --diff-filter=AMR origin/${branch}`
+    const command = `git diff --relative --name-only --diff-filter=AMR origin/${branch}`
     debugGit('command: %s', command)
 
     const result = shell.exec(command, { silent: true })
