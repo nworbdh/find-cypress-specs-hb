@@ -131,7 +131,7 @@ if (args['--test-counts']) {
       debug('maximum traced files to add %d', maxAddTracedFiles)
 
       Object.entries(deps).forEach(([filename, fileDependents]) => {
-        const f = path.join(args['--trace-imports'], filename)
+        const f = path.join(args['--trace-imports'], filename).replaceAll("\\","/")
         if (changedFiles.includes(f)) {
           debug(
             'the source file %s has changed, including its dependents %o in the list of changed files',
@@ -139,7 +139,7 @@ if (args['--test-counts']) {
             fileDependents,
           )
           fileDependents.forEach((name) => {
-            const nameInCypressFolder = path.join(args['--trace-imports'], name)
+            const nameInCypressFolder = path.join(args['--trace-imports'], name).replaceAll("\\","/")
             if (!changedFiles.includes(nameInCypressFolder)) {
               if (addedTracedFiles.length < maxAddTracedFiles) {
                 changedFiles.push(nameInCypressFolder)
